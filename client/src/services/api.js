@@ -28,11 +28,15 @@ class ApiService {
      */
     async request(endpoint, options = {}) {
         const url = `${this.baseUrl}${endpoint}`;
+        
+        // Prepare headers with the Tunnel Bypass included
         const headers = {
             'Content-Type': 'application/json',
+            'Bypass-Tunnel-Reminder': 'true', 
             ...options.headers,
         };
 
+        // Add Authorization token if it exists
         if (this.token) {
             headers['Authorization'] = `Bearer ${this.token}`;
         }
