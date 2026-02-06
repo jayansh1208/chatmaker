@@ -11,7 +11,7 @@ import { initializeSocket } from './socket/index.js';
 dotenv.config();
 
 // Validate required environment variables
-const requiredEnvVars = ['PORT', 'SUPABASE_URL', 'SUPABASE_ANON_KEY'];
+const requiredEnvVars = ['SUPABASE_URL', 'SUPABASE_ANON_KEY'];
 for (const envVar of requiredEnvVars) {
     if (!process.env[envVar]) {
         console.error(`Missing required environment variable: ${envVar}`);
@@ -25,7 +25,9 @@ const server = createServer(app);
 
 // Middleware
 app.use(cors({
-    origin: true,  // <--- This is the magic change. It accepts ALL connections.
+    origin: process.env.NODE_ENV === 'production'
+        ? (process.env.CLIENT_URL || true)
+        : true,
     credentials: true
 }));
 app.use(express.json());

@@ -13,7 +13,9 @@ const typingUsers = new Map(); // roomId -> Set of userIds
 export const initializeSocket = (server) => {
     const io = new Server(server, {
         cors: {
-            origin: process.env.SOCKET_CORS_ORIGIN || 'http://localhost:5173',
+            origin: process.env.NODE_ENV === 'production'
+                ? (process.env.SOCKET_CORS_ORIGIN || process.env.CLIENT_URL || true)
+                : true,
             methods: ['GET', 'POST'],
             credentials: true
         }

@@ -28,7 +28,7 @@ class ApiService {
      */
     async request(endpoint, options = {}) {
         const url = `${this.baseUrl}${endpoint}`;
-        
+
         // Prepare headers with the Tunnel Bypass included
         const headers = {
             'Content-Type': 'application/json',
@@ -47,15 +47,24 @@ class ApiService {
                 headers,
             });
 
+            // Check if response is JSON
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Backend server is not responding correctly. Please check if the server is running.');
+            }
+
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || 'Request failed');
+                throw new Error(data.error || `Request failed with status ${response.status}`);
             }
 
             return data;
         } catch (error) {
             console.error('API request error:', error);
+            if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
+                throw new Error('Cannot connect to backend server. Please check your internet connection and verify the backend is running.');
+            }
             throw error;
         }
     }
