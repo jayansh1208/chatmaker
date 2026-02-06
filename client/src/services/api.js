@@ -32,7 +32,7 @@ class ApiService {
         // Prepare headers with the Tunnel Bypass included
         const headers = {
             'Content-Type': 'application/json',
-            'Bypass-Tunnel-Reminder': 'true', 
+            'Bypass-Tunnel-Reminder': 'true',  // <--- This allows Vercel to bypass the password screen
             ...options.headers,
         };
 
