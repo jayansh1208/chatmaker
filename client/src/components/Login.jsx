@@ -25,16 +25,30 @@ export default function Login() {
 
                 const { error } = await signUp(email, password, username);
                 if (error) {
-                    setError(error.message || 'Failed to sign up');
+                    // Provide user-friendly error messages for signup
+                    if (error.message?.includes('already registered')) {
+                        setError('This email is already registered. Please sign in instead.');
+                    } else if (error.message?.includes('Password')) {
+                        setError('Password must be at least 6 characters long.');
+                    } else {
+                        setError('Unable to create account. Please try again.');
+                    }
                 }
             } else {
                 const { error } = await signIn(email, password);
                 if (error) {
-                    setError(error.message || 'Failed to sign in');
+                    // Provide user-friendly error messages for login
+                    if (error.message?.includes('Invalid login credentials') || error.message?.includes('Invalid')) {
+                        setError('Email or password is incorrect. Please try again or sign up for a new account.');
+                    } else if (error.message?.includes('Email not confirmed')) {
+                        setError('Please check your email and confirm your account first.');
+                    } else {
+                        setError('Unable to sign in. Please check your credentials and try again.');
+                    }
                 }
             }
         } catch (err) {
-            setError(err.message || 'An error occurred');
+            setError('An unexpected error occurred. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -144,6 +158,12 @@ export default function Login() {
                         >
                             {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
                         </button>
+
+                        {!isSignUp && (
+                            <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                                💡 First time here? Create an account by clicking "Sign Up" above
+                            </p>
+                        )}
                     </div>
                 </div>
 

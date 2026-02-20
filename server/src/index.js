@@ -53,13 +53,33 @@ app.use('/api/auth', authRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/users', userRoutes);
 
-// 404 handler
-app.use((req, res) => {
+// 404 handler for API routes
+app.use('/api/*', (req, res) => {
     res.status(404).json({
         error: 'Route not found',
         path: req.path
     });
 });
+
+// Serve frontend static files in production
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+if (process.env.NODE_ENV === 'production') {
+    const clientBuildPath = path.join(__dirname, '../../client/dist');
+    app.use(express.static(clientBuildPath));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(clientBuildPath, 'index.html'));
+    });
+} else {
+    // Basic fallback for development if someone hits root
+    app.get('/', (req, res) => {
+        res.send('API is running. Please use the Vite dev server for the frontend.');
+    });
+}
 
 // Global error handler
 app.use((err, req, res, next) => {
