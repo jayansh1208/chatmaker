@@ -27,7 +27,7 @@ class ApiService {
      * Make HTTP request
      */
     async request(endpoint, options = {}) {
-        const url = `${this.baseUrl}${endpoint}`;
+        const url = this.baseUrl ? `${this.baseUrl}${endpoint}` : endpoint;
 
         // Prepare headers with the Tunnel Bypass included
         const headers = {
