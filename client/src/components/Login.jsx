@@ -55,35 +55,41 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900 px-4">
-            <div className="max-w-md w-full">
+        <div className="min-h-screen flex items-center justify-center bg-mesh-light dark:bg-mesh-dark relative overflow-hidden px-4">
+
+            {/* Animated background elements */}
+            <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary-400/30 dark:bg-primary-600/20 rounded-full blur-[120px] animate-float pointer-events-none"></div>
+            <div className="absolute bottom-[-20%] right-[-10%] w-[45%] h-[45%] bg-violet-400/30 dark:bg-violet-600/20 rounded-full blur-[120px] animate-float pointer-events-none" style={{ animationDelay: '2s' }}></div>
+
+            <div className="max-w-md w-full z-10">
                 {/* Logo/Title */}
-                <div className="text-center mb-8 animate-fade-in">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white dark:bg-dark-800 rounded-full shadow-lg mb-4">
-                        <svg className="w-8 h-8 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="text-center mb-10 animate-fade-in relative">
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-white/80 dark:bg-dark-800/80 backdrop-blur-md rounded-2xl shadow-xl shadow-primary-500/10 mb-6 rotate-3 hover:rotate-0 transition-transform duration-300">
+                        <svg className="w-10 h-10 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
                     </div>
-                    <h1 className="text-4xl font-bold text-white mb-2">ChatMakere</h1>
-                    <p className="text-primary-100 dark:text-gray-400">Real-time messaging made simple</p>
+                    <h1 className="text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-violet-600 dark:from-primary-400 dark:to-violet-400 tracking-tight mb-3">ChatMakere</h1>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium">Real-time messaging made simple</p>
                 </div>
 
                 {/* Auth Form */}
-                <div className="card p-8 animate-slide-up">
-                    <h2 className="text-2xl font-bold text-center mb-6">
+                {/* Auth Form */}
+                <div className="glass-card p-10 animate-slide-up">
+                    <h2 className="text-2xl font-bold text-center mb-8 text-slate-800 dark:text-slate-100">
                         {isSignUp ? 'Create Account' : 'Welcome Back'}
                     </h2>
 
                     {error && (
-                        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg mb-4 animate-fade-in">
+                        <div className="bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl mb-6 animate-pop-in text-sm font-medium">
                             {error}
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-5">
                         {isSignUp && (
-                            <div>
-                                <label htmlFor="username" className="block text-sm font-medium mb-2">
+                            <div className="animate-fade-in">
+                                <label htmlFor="username" className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">
                                     Username
                                 </label>
                                 <input
@@ -91,7 +97,7 @@ export default function Login() {
                                     type="text"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
-                                    className="w-full px-4 py-3 border border-gray-300 dark:border-dark-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-dark-700 dark:text-white transition-all"
+                                    className="w-full px-5 py-3.5 bg-white/50 dark:bg-dark-900/50 border border-white/40 dark:border-dark-700/50 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-500/20 focus:border-primary-400 dark:text-white transition-all shadow-sm placeholder-slate-400"
                                     placeholder="johndoe"
                                     required={isSignUp}
                                 />
@@ -99,7 +105,7 @@ export default function Login() {
                         )}
 
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium mb-2">
+                            <label htmlFor="email" className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">
                                 Email
                             </label>
                             <input
@@ -107,14 +113,14 @@ export default function Login() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-4 py-3 border border-gray-300 dark:border-dark-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-dark-700 dark:text-white transition-all"
+                                className="w-full px-5 py-3.5 bg-white/50 dark:bg-dark-900/50 border border-white/40 dark:border-dark-700/50 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-500/20 focus:border-primary-400 dark:text-white transition-all shadow-sm placeholder-slate-400"
                                 placeholder="you@example.com"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium mb-2">
+                            <label htmlFor="password" className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">
                                 Password
                             </label>
                             <input
@@ -122,7 +128,7 @@ export default function Login() {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-4 py-3 border border-gray-300 dark:border-dark-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-dark-700 dark:text-white transition-all"
+                                className="w-full px-5 py-3.5 bg-white/50 dark:bg-dark-900/50 border border-white/40 dark:border-dark-700/50 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-500/20 focus:border-primary-400 dark:text-white transition-all shadow-sm placeholder-slate-400"
                                 placeholder="••••••••"
                                 required
                                 minLength={6}
@@ -132,7 +138,7 @@ export default function Login() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full btn-primary py-3 text-lg"
+                            className="w-full btn-primary py-3.5 text-base font-bold mt-2"
                         >
                             {loading ? (
                                 <span className="flex items-center justify-center">
@@ -148,19 +154,19 @@ export default function Login() {
                         </button>
                     </form>
 
-                    <div className="mt-6 text-center">
+                    <div className="mt-8 text-center">
                         <button
                             onClick={() => {
                                 setIsSignUp(!isSignUp);
                                 setError('');
                             }}
-                            className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors"
+                            className="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-semibold transition-colors focus:outline-none"
                         >
                             {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
                         </button>
 
                         {!isSignUp && (
-                            <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                            <p className="mt-4 text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-dark-800/50 py-2 px-3 rounded-lg inline-block">
                                 💡 First time here? Create an account by clicking "Sign Up" above
                             </p>
                         )}
@@ -168,7 +174,7 @@ export default function Login() {
                 </div>
 
                 {/* Footer */}
-                <p className="text-center text-primary-100 dark:text-gray-500 text-sm mt-8">
+                <p className="text-center text-slate-500/70 dark:text-slate-500 text-sm mt-10 font-medium">
                     Built with React, Socket.io & Supabase
                 </p>
             </div>
